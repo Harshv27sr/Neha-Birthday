@@ -1,48 +1,52 @@
 @import url("https://fonts.googleapis.com/css2?family=Caveat");
 
 .Container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
+  pointer-events: none;
 }
 
 .Picture {
-  display: inline-block;
   position: absolute;
-  top: 50%;
-  left: 50%;
   border: 5px solid #fff;
   border-radius: 3px;
   background: #797979;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-  transform: translate(-50%, -50%);
   user-select: none;
-  cursor: pointer;
-  transition: transform 0.2s ease;
+  cursor: grab;
+  pointer-events: auto;
+  transition: transform 0.1s ease;
+  width: 300px; /* Default size for desktop */
+}
+
+.Picture:active {
+  cursor: grabbing;
 }
 
 .Picture-video {
-  display: inline-block;
   position: absolute;
-  top: 50%;
-  left: 50%;
   border: 5px solid #fff;
   border-radius: 3px;
   background: #fff;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-  transform: translate(-50%, -50%);
   user-select: none;
-  cursor: pointer;
-  transition: transform 0.2s ease;
+  cursor: grab;
+  pointer-events: auto;
+  transition: transform 0.1s ease;
+  width: 300px; /* Default size for desktop */
+}
+
+.Picture-video:active {
+  cursor: grabbing;
 }
 
 .Picture-img {
   display: block;
-  width: 300px;
-  height: 400px;
+  width: 100%;
+  height: 400px; /* Default height for desktop */
   pointer-events: none;
   object-fit: cover;
 }
@@ -51,7 +55,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 300px;
+  width: 100%;
   height: 70px;
   padding: 12px 24px;
   font-size: 1.5rem;
@@ -71,4 +75,123 @@ body {
   touch-action: none;
   height: 100vh;
   width: 100vw;
+}
+
+/* Large screens (laptops, desktops) */
+@media (min-width: 1200px) {
+  .Picture, .Picture-video {
+    width: 320px; /* Slightly larger for big screens */
+  }
+  
+  .Picture-img {
+    height: 420px;
+  }
+}
+
+/* Medium screens (tablets, small laptops) */
+@media (max-width: 1199px) and (min-width: 769px) {
+  .Picture, .Picture-video {
+    width: 300px; /* Default size */
+  }
+  
+  .Picture-img {
+    height: 400px;
+  }
+}
+
+/* Small tablets and large phones */
+@media (max-width: 768px) {
+  .Picture, .Picture-video {
+    width: 280px;
+    border: 4px solid #fff;
+  }
+  
+  .Picture-img {
+    height: 370px;
+  }
+  
+  .Picture-note {
+    font-size: 1.3rem;
+    padding: 10px 20px;
+    height: 60px;
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+  .Picture, .Picture-video {
+    width: 250px;
+    border: 3px solid #fff;
+  }
+  
+  .Picture-img {
+    height: 330px;
+  }
+  
+  .Picture-note {
+    font-size: 1.2rem;
+    padding: 8px 16px;
+    height: 50px;
+  }
+}
+
+/* Small mobile phones */
+@media (max-width: 360px) {
+  .Picture, .Picture-video {
+    width: 220px;
+  }
+  
+  .Picture-img {
+    height: 290px;
+  }
+  
+  .Picture-note {
+    font-size: 1.1rem;
+    padding: 6px 12px;
+    height: 45px;
+  }
+}
+
+/* Landscape mode for mobile */
+@media (max-height: 600px) and (orientation: landscape) {
+  .Picture, .Picture-video {
+    width: 200px;
+  }
+  
+  .Picture-img {
+    height: 250px;
+  }
+  
+  .Picture-note {
+    font-size: 1rem;
+    padding: 5px 10px;
+    height: 40px;
+  }
+}
+
+/* Extra large screens */
+@media (min-width: 1600px) {
+  .Picture, .Picture-video {
+    width: 350px;
+  }
+  
+  .Picture-img {
+    height: 460px;
+  }
+}
+
+/* Prevent text selection and callout on mobile */
+.Picture, .Picture-video, .Picture-note {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Better touch scrolling */
+.Container {
+  -webkit-overflow-scrolling: touch;
 }
