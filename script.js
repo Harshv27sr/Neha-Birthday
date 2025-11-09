@@ -1,74 +1,163 @@
 const pictures = document.querySelectorAll('.Picture, .Picture-video');
-var previousTouch = undefined;
+var isDragging = false;
+var currentElement = null;
+var startX, startY, initialX, initialY;
 
-function updateElementPosition(element, event) {
-    var movementX, movementY;
+// Initialize all pictures with random positions and rotations
+function initializePictures() {
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+    
+    pictures.forEach((picture, index) => {
+        // Get the actual dimensions of the picture
+        const rect = picture.getBoundingClientRect();
+        const pictureWidth = rect.width || 300;
+        const pictureHeight = rect.height || 400;
+        
+        // Calculate random position around center
+        // Use smaller range for mobile, larger for desktop
+        const range = Math.min(window.innerWidth, window.innerHeight) * 0.15;
+        const randomX = (Math.random() - 0.5) * range;
+        const randomY = (Math.random() - 0.5) * range;
+        const randomRotate = Math.random() * 30 - 15; // -15 to 15 degrees
+        
+        // Set initial position (account for element's own dimensions)
+        picture.style.left = (centerX + randomX - pictureWidth/2) + 'px';
+        picture.style.top = (centerY + randomY - pictureHeight/2) + 'px';
+        picture.style.transform = `rotate(${randomRotate}deg)`;
+        picture.style.zIndex = index + 1;
+        
+        // Add drag events
+        addDragEvents(picture);
+    });
+}
 
-    if (event.type === 'touchmove') {
-        const touch = event.touches[0];
-        movementX = previousTouch ? touch.clientX - previousTouch.clientX : 0;
-        movementY = previousTouch ? touch.clientY - previousTouch.clientY : 0;
-        previousTouch = touch;
+function addDragEvents(element) {
+    // Remove existing events first to avoid duplicates
+    element.removeEventListener('mousedown', startDrag);
+    element.removeEventListener('touchstart', startDrag);
+    
+    // Mouse events
+    element.addEventListener('mousedown', startDrag);
+    
+    // Touch events
+    element.addEventListener('touchstart', startDrag, { passive: false });
+}
+
+function startDrag(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    currentElement = this;
+    isDragging = true;
+    
+    // Bring to front
+    const highestZ = Math.max(...Array.from(pictures).map(p => parseInt(p.style.zIndex) || 0));
+    currentElement.style.zIndex = highestZ + 1;
+    
+    // Get initial positions
+    if (e.type === 'touchstart') {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
     } else {
-        movementX = event.movementX;
-        movementY = event.movementY;
+        startX = e.clientX;
+        startY = e.clientY;
     }
-
-    // Get current position (parse from current style or use center position)
-    const currentY = parseInt(element.style.top) || (window.innerHeight / 2);
-    const currentX = parseInt(element.style.left) || (window.innerWidth / 2);
-
-    const elementY = currentY + movementY;
-    const elementX = currentX + movementX;
-
-    element.style.top = elementY + "px";
-    element.style.left = elementX + "px";
     
-    // Remove the centering transform when dragging, keep only rotation
-    const currentRotation = element.dataset.rotation || 0;
-    element.style.transform = `rotate(${currentRotation}deg)`;
+    initialX = parseInt(currentElement.style.left) || 0;
+    initialY = parseInt(currentElement.style.top) || 0;
+    
+    // Add move and end events
+    document.addEventListener('mousemove', drag);
+    document.addEventListener('touchmove', drag, { passive: false });
+    document.addEventListener('mouseup', stopDrag);
+    document.addEventListener('touchend', stopDrag);
+    document.addEventListener('touchcancel', stopDrag);
 }
 
-function startDrag(element, event) {
-    event.preventDefault();
-    const updateFunction = (event) => updateElementPosition(element, event);
-    const stopFunction = () => stopDrag({ update: updateFunction, stop: stopFunction });
+function drag(e) {
+    if (!isDragging || !currentElement) return;
     
-    document.addEventListener("mousemove", updateFunction);
-    document.addEventListener("touchmove", updateFunction);
-    document.addEventListener("mouseup", stopFunction);
-    document.addEventListener("touchend", stopFunction);
+    e.preventDefault();
+    
+    let currentX, currentY;
+    
+    if (e.type === 'touchmove') {
+        currentX = e.touches[0].clientX;
+        currentY = e.touches[0].clientY;
+    } else {
+        currentX = e.clientX;
+        currentY = e.clientY;
+    }
+    
+    // Calculate new position
+    const deltaX = currentX - startX;
+    const deltaY = currentY - startY;
+    
+    const newX = initialX + deltaX;
+    const newY = initialY + deltaY;
+    
+    // Update position
+    currentElement.style.left = newX + 'px';
+    currentElement.style.top = newY + 'px';
 }
 
-function stopDrag(functions) {
-    previousTouch = undefined;
-    document.removeEventListener("mousemove", functions.update);
-    document.removeEventListener("touchmove", functions.update);
-    document.removeEventListener("mouseup", functions.stop);
-    document.removeEventListener("touchend", functions.stop);
+function stopDrag() {
+    isDragging = false;
+    currentElement = null;
+    
+    // Remove event listeners
+    document.removeEventListener('mousemove', drag);
+    document.removeEventListener('touchmove', drag);
+    document.removeEventListener('mouseup', stopDrag);
+    document.removeEventListener('touchend', stopDrag);
+    document.removeEventListener('touchcancel', stopDrag);
 }
 
-// Initialize all pictures with random rotation
-pictures.forEach((picture, index) => {
-    const randomRotate = Math.random() * 20 - 10; // -10 to 10 degrees
+// Video autoplay handling
+document.addEventListener('DOMContentLoaded', function() {
+    const video = document.getElementById('birthdayVideo');
     
-    // Store rotation in dataset for later use
-    picture.dataset.rotation = randomRotate;
+    if (video) {
+        // Mute by default for autoplay
+        video.muted = true;
+        video.setAttribute('playsinline', '');
+        video.setAttribute('webkit-playsinline', '');
+        
+        // Try to play
+        const playPromise = video.play();
+        
+        if (playPromise !== undefined) {
+            playPromise.catch(error => {
+                console.log('Autoplay failed, waiting for interaction');
+            });
+        }
+        
+        // Unmute on first user interaction
+        function unmuteVideo() {
+            if (video.muted) {
+                video.muted = false;
+            }
+            document.body.removeEventListener('click', unmuteVideo);
+            document.body.removeEventListener('touchstart', unmuteVideo);
+        }
+        
+        document.body.addEventListener('click', unmuteVideo, { once: true });
+        document.body.addEventListener('touchstart', unmuteVideo, { once: true });
+    }
     
-    // Apply initial rotation while keeping centered
-    picture.style.transform = `translate(-50%, -50%) rotate(${randomRotate}deg)`;
-    
-    const startFunction = (event) => startDrag(picture, event);
-    
-    picture.addEventListener("mousedown", startFunction);
-    picture.addEventListener("touchstart", startFunction);
-    
-    // Bring current picture to front when interacting
-    picture.addEventListener("mousedown", () => {
-        picture.style.zIndex = 1000;
-    });
-    
-    picture.addEventListener("touchstart", () => {
-        picture.style.zIndex = 1000;
-    });
+    // Initialize pictures
+    initializePictures();
+});
+
+// Handle window resize and orientation change
+window.addEventListener('resize', initializePictures);
+window.addEventListener('orientationchange', function() {
+    setTimeout(initializePictures, 100);
+});
+
+// Prevent context menu
+document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+    return false;
 });
