@@ -117,35 +117,29 @@ function stopDrag() {
 // Video autoplay handling
 // Video autoplay handling (no “Tap to play” overlay)
 document.addEventListener('DOMContentLoaded', function() {
-    const video = document.getElementById('birthdayVideo');
+  const video = document.getElementById('birthdayVideo');
+  if (!video) return;
 
-    if (video) {
-        // Allow autoplay silently
-        video.muted = true;
-        video.autoplay = true;
-        video.setAttribute('playsinline', '');
-        video.setAttribute('webkit-playsinline', '');
+  // Don’t autoplay immediately — wait for user tap
+  video.muted = false;
+  video.autoplay = false;
+  video.setAttribute('playsinline', '');
+  video.setAttribute('webkit-playsinline', '');
 
-        // Try to play muted first (this avoids overlay)
-        video.play().catch(err => {
-            console.log('Autoplay blocked, waiting for user tap');
-        });
+  // Add a one-time tap listener to start video with sound
+  const startVideo = () => {
+    video.play().catch(err => console.log('Play failed:', err));
+    document.removeEventListener('click', startVideo);
+    document.removeEventListener('touchstart', startVideo);
+  };
 
-        // When user interacts, unmute and replay
-        const enableSound = () => {
-            video.muted = false;
-            video.play().catch(()=>{});
-            document.removeEventListener('click', enableSound);
-            document.removeEventListener('touchstart', enableSound);
-        };
+  document.addEventListener('click', startVideo, { once: true });
+  document.addEventListener('touchstart', startVideo, { once: true });
 
-        document.addEventListener('click', enableSound, { once: true });
-        document.addEventListener('touchstart', enableSound, { once: true });
-    }
-
-    // Initialize pictures
-    initializePictures();
+  // Initialize pictures after setup
+  initializePictures();
 });
+
 
 // Handle window resize and orientation change
 window.addEventListener('resize', initializePictures);
