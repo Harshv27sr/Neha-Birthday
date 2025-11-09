@@ -195,3 +195,9 @@ body {
 .Container {
   -webkit-overflow-scrolling: touch;
 }
+
+/* Hide any video overlay text */
+video::-webkit-media-text-track-display,
+video::-webkit-media-controls-overlay-enclosure {
+  display: none !important;
+}
