@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>College Wishlist - Instant photo film galerie</title>
@@ -21,9 +22,11 @@
       cursor: pointer;
       border-radius: 3px;
     }
+
     .video-overlay.hidden {
       display: none;
     }
+
     .tap-to-play {
       font-size: 1.2rem;
       text-align: center;
@@ -33,6 +36,7 @@
       border-radius: 10px;
       border: 2px solid white;
     }
+
     .mute-button {
       position: absolute;
       top: 10px;
@@ -50,137 +54,138 @@
     }
   </style>
 </head>
+
 <body>
-<div class="Container">
-  <!-- Video card with overlay -->
-  <div class="Picture-video" id="video">
-    <video id="birthdayVideo" class="Picture-img" playsinline loop preload="metadata">
-      <source src="./WhatsApp Video 2025-11-09 at 15.55.14_88def5ba.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-    <div class="video-overlay" id="videoOverlay">
-      <div class="tap-to-play">Tap to Play Video with Sound 🔊</div>
+  <div class="Container">
+    <!-- Video card with overlay -->
+    <div class="Picture-video" id="video">
+      <video id="birthdayVideo" class="Picture-img" loop preload="auto" playsinline>
+        <source src="./WhatsApp Video 2025-11-09 at 15.55.14_88def5ba.mp4" type="video/mp4">
+      </video>
+      <div class="video-overlay" id="videoOverlay">
+        <div class="tap-to-play">Tap to Play Video with Sound 🔊</div>
+      </div>
+      <button class="mute-button" id="muteButton">🔇</button>
+      <div class="Picture-note"><span>Happiiest Birthday Neha🎉💖</span></div>
     </div>
-    <button class="mute-button" id="muteButton">🔇</button>
-    <div class="Picture-note"><span>Happiiest Birthday 🎉💖</span></div>
+
+    <!-- Other picture cards -->
+    <div class="Picture">
+      <img class="Picture-img" src="./WhatsApp Image 2025-11-09 at 13.48.59_a5b8a732.jpg" alt="" />
+      <div class="Picture-note"><span>Happy 🎉❤️</span></div>
+    </div>
+    <div class="Picture">
+      <img class="Picture-img" src="./WhatsApp Image 2025-11-09 at 13.49.00_e41962bc.jpg" alt="" />
+      <div class="Picture-note"><span>Birthday 🎂💕</span></div>
+    </div>
+    <div class="Picture">
+      <img class="Picture-img" src="./WhatsApp Image 2025-11-09 at 14.39.16_e05e143d.jpg" alt="" />
+      <div class="Picture-note"><span>Celebrate 🎉💖</span></div>
+    </div>
+    <div class="Picture">
+      <img class="Picture-img" src="./WhatsApp Image 2025-11-09 at 19.40.21_6388f3b7.jpg" alt="" />
+      <div class="Picture-note"><span>Gift 🎁❤️</span></div>
+    </div>
+    <div class="Picture">
+      <img class="Picture-img" src="./WhatsApp Image 2025-11-09 at 14.39.17_af9d1a44.jpg" alt="" />
+      <div class="Picture-note"><span>Love 💕🎈</span></div>
+    </div>
+    <div class="Picture">
+      <img class="Picture-img" src="./WhatsApp Image 2025-11-09 at 14.39.18_808d1a69.jpg" alt="" />
+      <div class="Picture-note"><span>Joy ❤️🎂</span></div>
+    </div>
+    <div class="Picture">
+      <img class="Picture-img" src="./WhatsApp Image 2025-11-09 at 15.03.50_797d7805.jpg" alt="" />
+      <div class="Picture-note"><span>Fun 🎈💖</span></div>
+    </div>
+    <div class="Picture">
+      <img class="Picture-img" src="./WhatsApp Image 2025-11-09 at 15.05.23_6ffcfe9e.jpg" alt="" />
+      <div class="Picture-note"><span>Hugs 💖🎂</span></div>
+    </div>
   </div>
 
-  <!-- Other picture cards -->
-  <div class="Picture">
-    <img class="Picture-img" src="./WhatsApp Image 2025-11-09 at 13.48.59_a5b8a732.jpg" alt="" />
-    <div class="Picture-note"><span>Happy 🎉❤️</span></div>
-  </div>
-  <div class="Picture">
-    <img class="Picture-img" src="./WhatsApp Image 2025-11-09 at 13.49.00_e41962bc.jpg" alt="" />
-    <div class="Picture-note"><span>Birthday 🎂💕</span></div>
-  </div>
-  <div class="Picture">
-    <img class="Picture-img" src="./WhatsApp Image 2025-11-09 at 14.39.16_e05e143d.jpg" alt="" />
-    <div class="Picture-note"><span>Celebrate 🎉💖</span></div>
-  </div>
-  <div class="Picture">
-    <img class="Picture-img" src="./WhatsApp Image 2025-11-09 at 19.40.21_6388f3b7.jpg" alt="" />
-    <div class="Picture-note"><span>Gift 🎁❤️</span></div>
-  </div>
-  <div class="Picture">
-    <img class="Picture-img" src="./WhatsApp Image 2025-11-09 at 14.39.17_af9d1a44.jpg" alt="" />
-    <div class="Picture-note"><span>Love 💕🎈</span></div>
-  </div>
-  <div class="Picture">
-    <img class="Picture-img" src="./WhatsApp Image 2025-11-09 at 14.39.18_808d1a69.jpg" alt="" />
-    <div class="Picture-note"><span>Joy ❤️🎂</span></div>
-  </div>
-  <div class="Picture">
-    <img class="Picture-img" src="./WhatsApp Image 2025-11-09 at 15.03.50_797d7805.jpg" alt="" />
-    <div class="Picture-note"><span>Fun 🎈💖</span></div>
-  </div>
-  <div class="Picture">
-    <img class="Picture-img" src="./WhatsApp Image 2025-11-09 at 15.05.23_6ffcfe9e.jpg" alt="" />
-    <div class="Picture-note"><span>Hugs 💖🎂</span></div>
-  </div>
-</div>
+  <script src="./script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const video = document.getElementById('birthdayVideo');
+      const overlay = document.getElementById('videoOverlay');
+      const muteButton = document.getElementById('muteButton');
 
-<script src="./script.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const video = document.getElementById('birthdayVideo');
-  const overlay = document.getElementById('videoOverlay');
-  const muteButton = document.getElementById('muteButton');
-  
-  if (video && overlay) {
-    // Remove autoplay and muted attributes - we'll handle this manually
-    video.removeAttribute('autoplay');
-    video.removeAttribute('muted');
-    
-    // Show overlay initially
-    overlay.classList.remove('hidden');
-    
-    // When user taps overlay, play video with sound
-    overlay.addEventListener('click', function() {
-      video.play().then(() => {
-        // Successfully started playing
-        overlay.classList.add('hidden');
-        muteButton.style.display = 'flex';
-        muteButton.textContent = '🔊';
-        console.log('Video started playing with sound');
-      }).catch(error => {
-        console.log('Play failed, trying with muted:', error);
-        // If play with sound fails, try muted
-        video.muted = true;
-        video.play().then(() => {
-          overlay.classList.add('hidden');
-          muteButton.style.display = 'flex';
-          muteButton.textContent = '🔇';
-          // Try to unmute after play
-          setTimeout(() => {
-            video.muted = false;
+      if (video && overlay) {
+        // Remove autoplay and muted attributes - we'll handle this manually
+        video.removeAttribute('autoplay');
+        video.removeAttribute('muted');
+
+        // Show overlay initially
+        overlay.classList.remove('hidden');
+
+        // When user taps overlay, play video with sound
+        overlay.addEventListener('click', function () {
+          video.play().then(() => {
+            // Successfully started playing
+            overlay.classList.add('hidden');
+            muteButton.style.display = 'flex';
             muteButton.textContent = '🔊';
-          }, 1000);
-        }).catch(error2 => {
-          console.log('Muted play also failed:', error2);
-          overlay.innerHTML = '<div class="tap-to-play">Tap to Play (Audio blocked) ▶</div>';
+            console.log('Video started playing with sound');
+          }).catch(error => {
+            console.log('Play failed, trying with muted:', error);
+            // If play with sound fails, try muted
+            video.muted = true;
+            video.play().then(() => {
+              overlay.classList.add('hidden');
+              muteButton.style.display = 'flex';
+              muteButton.textContent = '🔇';
+              // Try to unmute after play
+              setTimeout(() => {
+                video.muted = false;
+                muteButton.textContent = '🔊';
+              }, 1000);
+            }).catch(error2 => {
+              console.log('Muted play also failed:', error2);
+              overlay.innerHTML = '<div class="tap-to-play">Tap to Play (Audio blocked) ▶</div>';
+            });
+          });
         });
-      });
-    });
-    
-    // Mute/unmute button
-    if (muteButton) {
-      muteButton.addEventListener('click', function(e) {
-        e.stopPropagation();
-        video.muted = !video.muted;
-        muteButton.textContent = video.muted ? '🔇' : '🔊';
-      });
-    }
-    
-    // Also allow clicking the video to play if overlay is hidden
-    video.addEventListener('click', function() {
-      if (video.paused) {
-        video.play().catch(error => {
-          console.log('Video play on click failed:', error);
-          overlay.classList.remove('hidden');
+
+        // Mute/unmute button
+        if (muteButton) {
+          muteButton.addEventListener('click', function (e) {
+            e.stopPropagation();
+            video.muted = !video.muted;
+            muteButton.textContent = video.muted ? '🔇' : '🔊';
+          });
+        }
+
+        // Also allow clicking the video to play if overlay is hidden
+        video.addEventListener('click', function () {
+          if (video.paused) {
+            video.play().catch(error => {
+              console.log('Video play on click failed:', error);
+              overlay.classList.remove('hidden');
+            });
+          }
+        });
+
+        // Handle video end - restart it
+        video.addEventListener('ended', function () {
+          video.currentTime = 0;
+          video.play().catch(error => {
+            console.log('Restart failed:', error);
+          });
         });
       }
     });
-    
-    // Handle video end - restart it
-    video.addEventListener('ended', function() {
-      video.currentTime = 0;
-      video.play().catch(error => {
-        console.log('Restart failed:', error);
-      });
-    });
-  }
-});
 
-// Also add a global click handler to help with autoplay
-document.body.addEventListener('click', function() {
-  const video = document.getElementById('birthdayVideo');
-  if (video && video.paused) {
-    video.play().catch(error => {
-      console.log('Global click play failed:', error);
+    // Also add a global click handler to help with autoplay
+    document.body.addEventListener('click', function () {
+      const video = document.getElementById('birthdayVideo');
+      if (video && video.paused) {
+        video.play().catch(error => {
+          console.log('Global click play failed:', error);
+        });
+      }
     });
-  }
-});
-</script>
+  </script>
 </body>
+
 </html>
